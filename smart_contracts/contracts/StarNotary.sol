@@ -10,26 +10,27 @@ contract StarNotary is ERC721 {
         string ra;
         string dec;
         string mag;
+        uint tokenId;
     }
 
-    mapping(uint256 => Star) public starIdToStarInfo; 
+    //mapping(uint256 => Star) public starIdToStarInfo; 
     mapping(uint256 => Star) public tokenIdToStarInfo;
-    mapping(uint256 => Star) _tokenToStarInfo;
+    //mapping(uint256 => Star) _tokenToStarInfo;
     mapping(uint256 => bool) _tokenExists;
     mapping(uint256 => uint256) public starsForSale;
     
-    uint256 public count = 0;
+    //uint256 public count = 0;
     
     function createStar(string _name, string _dec, string _mag, string _cent, string _story, uint256 _tokenId) public returns(uint256) {
         uint256 starHash = _hashify_star(_dec, _mag, _cent);
         require(!_starExists(starHash), "Star already exists");
         _tokenExists[starHash] = true;
         
-        Star memory newStar = Star(_name, _dec, _mag, _cent, _story);
-        _tokenToStarInfo[starHash] = newStar; // do cara noiado
+        Star memory newStar = Star(_name, _dec, _mag, _cent, _story, _tokenId);
         tokenIdToStarInfo[_tokenId] = newStar; // meu
         //count = count + 1;
         _mint(msg.sender, _tokenId);
+        return starHash;
     }
     
     function _hashify_star(string dec, string mag, string cent) private pure returns (uint256) {
