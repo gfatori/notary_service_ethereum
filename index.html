@@ -67,6 +67,20 @@
           <button id="search-button" onclick="findStar(document.getElementById('starId').value)">Find Star</button>
       </div>
 
+        <h2>Put star for Sale</h2>
+        <div class="row">
+          <label class="bold">token id:</label>
+          <input type="text" id="starId-sale" />
+        </div>
+        <div class="row">
+          <label class="bold">price:</label> <input type="text" id="star-price" />
+        </div>
+        <button id="id-button" onclick="putStarForSale()">Sale</button>
+        <div id="star-hash"></div>
+
+        <hr />
+      </div>
+
         <script>    
          
             // if(typeof web3 != 'undefined') { 
@@ -565,7 +579,7 @@
                 }
                 var account = accounts[0]
                 var name = document.getElementById('name').value;
-                var token = document.getElementById('token-id').value;
+                var token = document.getElementById('token').value;
                 var dec = document.getElementById('dec').value;
                 var mag = document.getElementById('mag').value;
                 var cent = document.getElementById('cent').value;
@@ -606,6 +620,18 @@
                 });
             })
         }
+        function putStarForSale() {
+        let starIdSale = document.getElementById("starId-sale").value;
+        let price = document.getElementById("star-price").value;
+        console.log(starNotary);
+        starNotary.putStarUpForSale(starIdSale, price, function(error, result){
+          if (!error){
+            console.log("success")
+          }else{
+            console.log(error)
+          }
+        });
+      }
 
         function isEmpty(data){
           return data === undefined || data === null || data === "" || data===0
